@@ -1,6 +1,8 @@
 # bwh-detector
 A #MachineLearning project with the aim to mark and count _#Bees_, _#Wasps_ and _#Hornets_ (appriviation used : _#BWH_) in a picture.
 
+![](bee-detector.gif)
+
 This Project has the following dependency:
 https://github.com/AlexeyAB/darknet
 or the original
@@ -12,6 +14,14 @@ Darknet is a tool which implements a neural-net; The core of every detection-set
 * the correspondig Class-Naming-File
 
 The training of the weights-file is time- and power-consuming; and espacialy for Bees, Wasps and Hornet (#bwh) not an easy thing to do; 
+
+# Project-Content
+## Config and Weights
+This Repository contains several *config* and *weights*-Files in **ongoing** state. The quality is actually good for the use it was initialy created:
+
+### Intended Use of this repositoy
+The [BeeCam](https://imkerverein-usingen.de/bee-cam/) is a [4MP-Webcam](https://reolink.com/de/product/rlc-410w/). A lower resulotion may work but quality may differ; The distance to the #Bee-Hive is about 50-60 cm.
+
 
 # Problems
 ## Resolution of the Object
@@ -28,14 +38,10 @@ The main issue - i did have - was a big enough dataset espacially for _#Wasps_ a
 https://github.com/Cartucho/OpenLabeling
 The labeled image-dataset can be requested by issue; 
 
-# Project-Content
-## Config and Weights
-This Repository contains several *config* and *weights*-Files in **ongoing** state. The quality is actually good for the use it was initialy created:
-
-### Intended Use of this repositoy
-The [BeeCam](https://imkerverein-usingen.de/bee-cam/) is a [4MP-Webcam](https://reolink.com/de/product/rlc-410w/). A lower resulotion may work but quality may differ; The distance to the #Bee-Hive is about 50-60 cm.
 
 # FAQ
+This project assumes that the "darknet-binary" is in the $PATH-Variable of your OS.
+
 ## Windows-Installation of Alexeys darknet-fork
 On Windows the most easy way to build it - is this; But it may depend on updates of the darknet-repository.
 

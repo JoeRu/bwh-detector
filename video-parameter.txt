@@ -1,0 +1,86 @@
+https://github.com/Cartucho/OpenLabeling
+
+http://rlc-511w.joe.lan/cgi-bin/
+https://home.jru.me/bee-cam/api.cgi?cmd=Snap&channel=0&rs=sdilj23SDO3DDGHJsdfs&user=guest&password=my_guest&1555017246
+
+darknet detector test bee-counter.data bwh.cfg backup/bwh_last.weights -thresh 0.25 api.jpeg
+darknet detector test bee-counter.data bwh2.cfg backup/bwh2_last.weights -thresh 0.15 api.jpeg
+
+
+darknet detector demo bee-counter.data bwh2.cfg backup/bwh2_last.weights -thresh 0.15 rtsp://guest:my_guest@rlc-511w.joe.lan:554/
+
+convert rtsp to http-live-stream
+https://medium.com/androvideo/convert-rtsp-to-hls-using-ffmpeg-2fe2cdf3a0de
+
+ffmpeg -fflags nobuffer \
+ -rtsp_transport tcp \
+ -i rtsp://guest:my_guest@rlc-511w.joe.lan:554/ \
+ -vsync 0 \
+ -copyts \
+ -vcodec copy \
+ -movflags frag_keyframe+empty_moov \
+ -an \
+ -hls_flags delete_segments+append_list \
+ -f segment \
+ -segment_list_flags live \
+ -segment_time 1 \
+ -segment_list_size 3 \
+ -segment_format mpegts \
+ -segment_list /tmp/stream/index.m3u8 \
+ -segment_list_type m3u8 \
+ -segment_list_entry_prefix /stream/ \
+ /tmp/stream/%d.ts
+
+
+
+Get-ChildItem ".\data\batch5\" -Filter *.jpg |
+Foreach-Object {
+	& darknet.exe detector test bee-counter.data bwh2.cfg backup/bwh2_last.weights -thresh 0.25 -dont_show -save_labels
+}
+
+darknet partial bwh.cfg backup/bwh_last.weights backup/bwh_last.weights 74
+darknet partial bwh2.cfg backup/yv3t_last.weights backup/bwh2_last.weights 74
+
+darknet partial yolov3_spp.cfg yolov3-spp.weights backup/yolov3_spp_last.weights 74
+
+
+
+
+To calculate anchors: 
+darknet.exe detector calc_anchors bee-counter.data -num_of_clusters 9 -width 608 -height 608
+------------
+bwh2
+
+ num_of_clusters = 9, width = 1024, height = 768
+ read labels from 1049 images
+ loaded          image: 1049     box: 6388
+ all loaded.
+
+ calculating k-means++ ...
+
+ iterations = 137
+
+
+ avg IoU = 76.35 %
+
+Saving anchors to the file: anchors.txt
+anchors =  40, 40,  62, 48,  54, 76,  86, 73, 146,154, 261,259, 476,323, 465,503, 721,533
+
+--------------
+bwh
+darknet.exe detector calc_anchors bee-counter.data -num_of_clusters 9 -width 768 -height 576
+
+ num_of_clusters = 9, width = 768, height = 576
+ read labels from 1007 images
+ loaded          image: 1007     box: 5893
+ all loaded.
+
+ calculating k-means++ ...
+
+ iterations = 91
+
+
+ avg IoU = 76.32 %
+
+Saving anchors to the file: anchors.txt
+anchors =  29, 30,  45, 36,  41, 58,  64, 54, 111,118, 200,196, 366,236, 347,371, 540,402
